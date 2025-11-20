@@ -47,9 +47,44 @@
             text-decoration: underline;
         }
 
+        .skrime-affiliate {
+            background-color: #15171c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .skrime-affiliate img {
+            max-width: 100px;
+            height: auto;
+            margin-right: 15px;
+        }
+
+        .skrime-affiliate a {
+            color: #2443ac;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .skrime-affiliate a:hover {
+            color: #2443ac;
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             main {
                 padding: 15px;
+            }
+            .skrime-affiliate {
+                flex-direction: column;
+                text-align: center;
+            }
+            .skrime-affiliate img {
+                margin-bottom: 10px;
+                margin-right: 0;
             }
         }
 
@@ -89,9 +124,10 @@
         </ul>
 
         <h2>Affiliate-Links</h2>
-        <ul>
-            <li><a href="https://skrime.eu/a/ivoternis">Cheap, Good Web-Hosting (DE)</a></li>
-        </ul>
+        <div class="skrime-affiliate">
+            <img src="assets/img/skrime-primary.png" alt="Skrime Logo">
+            <a href="https://skrime.eu/a/ivoternis">Cheap, Good Web-Hosting (DE)</a>
+        </div>
     </main>
 
     <footer>
