@@ -1,6 +1,10 @@
+:root {
+    --border-radius-layout: 32px;
+}
+
 html, body {
     font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
+    background-color: cornsilk;
     color: #222;
     line-height: 1.6;
     margin: 0;
@@ -17,6 +21,10 @@ a:hover {
 main {
     padding: 25px;
     flex-grow: 1;
+    background-color: #f8f8f8;
+    margin: 2rem;
+    border-radius: 12px 16px 12px 24px;
+    border: 1px solid lightgray;
 }
 
 h2 {
@@ -45,7 +53,6 @@ ul a:hover {
     text-decoration: underline;
 }
 
-/* Affiliate section */
 .skrime-affiliate {
     padding: 15px;
     border-radius: 8px;
@@ -72,7 +79,6 @@ ul a:hover {
     text-decoration: underline;
 }
 
-/* Mobile layout */
 @media (max-width: 768px) {
     main {
         padding: 15px;
@@ -87,13 +93,14 @@ ul a:hover {
     }
 }
 
-/* Footer */
 footer {
     background-color: #383838;
     color: #fefefe;
     padding-top: 3.5rem;
     padding-bottom: 1rem;
     text-align: center;
+    border-top-left-radius: var(--border-radius-layout);
+    border-top-right-radius: var(--border-radius-layout);
 }
 
 footer a {
@@ -104,5 +111,5 @@ footer a {
 }
 
 footer a:hover {
-    color: #76ff03;
+    color: lightblue;
 }
