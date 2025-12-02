@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const modrinthProjectsContainer =
         document.getElementById('modrinth-projects');
+    const githubActivityContainer =
+        document.getElementById('github-activity-streak');
     const username = 'ivoternis';
 
     async function fetchGithubActivity() {
@@ -21,10 +23,101 @@ document.addEventListener('DOMContentLoaded', () => {
             return github_activity_log;
         } catch (error) {
             console.error('Failed to fetch GitHub activity:', error);
+            if (githubActivityContainer) {
+                githubActivityContainer.innerHTML =
+                    '<p>Fehler beim Laden der GitHub-Aktivität.</p>';
+            }
         }
     }
 
-    fetchGithubActivity();
+    async function countGithubActivityStreak() {
+        const activityLog = await fetchGithubActivity();
+        if (!activityLog || activityLog.length === 0) {
+            if (githubActivityContainer) {
+                githubActivityContainer.innerHTML =
+                    '<p>Keine GitHub-Aktivität gefunden.</p>';
+            }
+            return;
+        }
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const activityDates = new Set();
+        activityLog.forEach((event) => {
+            const eventDate = new Date(event.created_at);
+            eventDate.setHours(0, 0, 0, 0);
+            activityDates.add(eventDate.toISOString());
+        });
+
+        let streak = 0;
+        let yesterdayHadActivity = false;
+        let currentDay = new Date(today);
+
+        const todayHasActivity = activityDates.has(today.toISOString());
+
+        if (todayHasActivity) {
+            streak = 1;
+        }
+
+        let loopLimit = 30;
+        for (let i = 0; i < loopLimit; i++) {
+            const dayToCheck = new Date(currentDay);
+            dayToCheck.setDate(currentDay.getDate() - i);
+            dayToCheck.setHours(0, 0, 0, 0);
+
+            const dayString = dayToCheck.toISOString();
+
+            if (i === 0) {
+                if (!todayHasActivity) {
+                    const yesterday = new Date(today);
+                    yesterday.setDate(today.getDate() - 1);
+                    yesterday.setHours(0, 0, 0, 0);
+                    if (activityDates.has(yesterday.toISOString())) {
+                        streak = 1;
+                        yesterdayHadActivity = true;
+                    } else {
+                        yesterdayHadActivity = false;
+                    }
+                } else {
+                    yesterdayHadActivity = true;
+                }
+                continue;
+            }
+
+
+            if (activityDates.has(dayString)) {
+                if (yesterdayHadActivity) {
+                    streak++;
+                } else {
+                    streak = 1;
+                    yesterdayHadActivity = true;
+                }
+            } else {
+                if (yesterdayHadActivity) {
+                    break;
+                }
+            }
+            yesterdayHadActivity = activityDates.has(dayString);
+        }
+
+        let streakSuffix = '';
+        if (todayHasActivity && streak > 0) {
+            streakSuffix = '+';
+        } else if (streak === 0 && todayHasActivity) {
+            streak = 1;
+            streakSuffix = '+';
+        }
+
+        if (githubActivityContainer) {
+            githubActivityContainer.innerHTML = `
+                <p>GitHub Aktivitäts-Streak: <strong>${streak}${streakSuffix} Tage</strong></p>
+            `;
+        }
+    }
+
+    //fetchGithubActivity();
+    countGithubActivityStreak();
 
     if (!modrinthProjectsContainer) {
         console.error('Kein Modrinth Projektcontainder gefunden.');
