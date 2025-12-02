@@ -3,6 +3,29 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('modrinth-projects');
     const username = 'ivoternis';
 
+    async function fetchGithubActivity() {
+        try {
+            const response = await fetch(
+                `https://api.github.com/users/${username}/events`,
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    `GitHub API HTTP error! status: ${response.status}`,
+                );
+            }
+
+            const github_activity_log = await response.json();
+            console.log('GitHub Activity Log:', github_activity_log);
+
+            return github_activity_log;
+        } catch (error) {
+            console.error('Failed to fetch GitHub activity:', error);
+        }
+    }
+
+    fetchGithubActivity();
+
     if (!modrinthProjectsContainer) {
         console.error('Kein Modrinth Projektcontainder gefunden.');
         return;
