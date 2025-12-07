@@ -106,7 +106,7 @@ ul a {
 
 ul a:hover {
     padding: 6px 12px;
-    margin: -1.3px;
+    /*margin: -1.3px;*/
     background-color: var(--link-hover-background);
 }
 
