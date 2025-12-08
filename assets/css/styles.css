@@ -98,15 +98,18 @@ ul a {
     transition:
         color 0.3s ease,
         background-color 0.3s ease,
-        padding 0.3s ease;
-        /*margin: .4s ease-in-out;*/
+        padding 0.3s ease-in-out,
+        border-radius .3s ease-in-out,
+        margin .3s ease-in-out;
     color-scheme: light dark;
     /*margin-inline-start: 0;*/
 }
 
 ul a:hover {
-    padding: 6px 12px;
-    /*margin: -1.3px;*/
+    /*padding: 6px 12px;*/
+    padding: 9px 18px;
+    border-radius: 12.345px;
+    margin: -7px;
     background-color: var(--link-hover-background);
 }
 
